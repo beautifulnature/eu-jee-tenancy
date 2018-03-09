@@ -1,0 +1,1 @@
+create table public.city (id  bigserial not null, code varchar(255), primary key (id));
