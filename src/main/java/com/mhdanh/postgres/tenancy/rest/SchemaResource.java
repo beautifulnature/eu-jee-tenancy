@@ -9,6 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
 import com.mhdanh.postgres.tenancy.flyway.SchemaCreator;
+import com.mhdanh.postgres.tenancy.flyway.SchemaMigrationService;
 
 @RequestScoped
 @Transactional
@@ -18,10 +19,20 @@ public class SchemaResource {
 	@Inject
     private SchemaCreator schema;
 	
+	@Inject
+	private SchemaMigrationService schemaService;
+	
 	@POST
     @Path("schema")
     public Response createTenantSchema(@PathParam("schema-name") String schemaName) {
 			schema.createSchema(schemaName);
-        	return Response.ok().build();
+        	return Response.ok("Create schema successful").build();
+    }
+	
+	@POST
+    @Path("schema/migrate")
+    public Response createTablesInTenantSchema(@PathParam("schema-name") String schemaName) {
+			schemaService.migrateSchema(schemaName);
+        	return Response.ok("Migration schema successful").build();
     }
 }
