@@ -1,0 +1,1 @@
+alter table school add column city_code varchar(255);

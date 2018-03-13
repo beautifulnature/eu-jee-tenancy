@@ -23,7 +23,7 @@
 			<version>${javaee.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- Flyway for migration -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
@@ -31,8 +31,59 @@
 			<version>4.2.0</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.0.7.Final</version>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>postgres-tenancy</finalName>
+		<plugins>
+			<plugin>
+				<groupId>de.juplo</groupId>
+				<artifactId>hibernate-maven-plugin</artifactId>
+				<version>2.0.0</version>
+				<configuration>
+					<export>false</export>
+					<skip>false</skip>
+					<force>true</force>
+					<driver>org.hsqldb.jdbcDriver</driver>
+					<dialect>PostgreSQL9</dialect>
+					<url>jdbc:h2:mem:test</url>
+					<username>sa</username>
+					<password />
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-entitymanager</artifactId>
+						<version>5.0.10.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-java8</artifactId>
+						<version>5.1.0.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-core</artifactId>
+						<version>5.0.10.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>hsqldb</groupId>
+						<artifactId>hsqldb</artifactId>
+						<version>1.8.0.10</version>
+					</dependency>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>1.4.192</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
 	</build>
 </project>
