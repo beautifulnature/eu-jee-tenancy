@@ -32,6 +32,7 @@ public class SchemaResource {
 	@Inject
 	private TokenService tokenService;
 	
+	@PublicAPI
 	@POST
     @Path("schema")
     public Response createTenantSchema(@PathParam("schema-name") String schemaName) {
@@ -39,6 +40,7 @@ public class SchemaResource {
         	return Response.ok("Create schema successful").build();
     }
 	
+	@PublicAPI
 	@POST
     @Path("schema/migrate")
     public Response createTablesInTenantSchema(@PathParam("schema-name") String schemaName) {
