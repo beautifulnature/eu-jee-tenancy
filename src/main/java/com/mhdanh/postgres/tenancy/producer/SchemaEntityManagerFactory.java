@@ -2,33 +2,32 @@ package com.mhdanh.postgres.tenancy.producer;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.hibernate.jdbc.Work;
 
 import com.mhdanh.postgres.tenancy.annotation.CurrentSchema;
+import com.mhdanh.postgres.tenancy.jwt.Token;
 
 @RequestScoped
 @Transactional
 public class SchemaEntityManagerFactory {
 	
-	private static final String SCHEMA_NAME = "SCHEMA_NAME";
 	private static final String RESET_ROLE = "RESET ROLE";
 	
 	@PersistenceContext
-	EntityManager em;
+	private EntityManager em;
 
 	@Inject
-	HttpServletRequest request;
-
+	@CurrentSchema
+    private Token token;
+	
 	@Produces
 	@CurrentSchema
 	@RequestScoped
@@ -69,10 +68,10 @@ public class SchemaEntityManagerFactory {
 	}
 
 	private boolean hasTenant() {
-		return request.getHeader(SCHEMA_NAME) != null && !request.getHeader(SCHEMA_NAME).isEmpty();
+		return getSchemaName() != null && !getSchemaName().isEmpty();
 	}
 
 	private String getSchemaName() {
-		return request.getHeader(SCHEMA_NAME);
+		return token.getSchema();
 	}
 }

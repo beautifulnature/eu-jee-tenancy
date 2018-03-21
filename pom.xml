@@ -37,7 +37,13 @@
 			<version>5.0.7.Final</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<!-- JWT security -->
+		<dependency>
+		    <groupId>com.nimbusds</groupId>
+		    <artifactId>nimbus-jose-jwt</artifactId>
+		    <version>4.23</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<finalName>postgres-tenancy</finalName>
